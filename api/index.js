@@ -1,13 +1,8 @@
 const express = require("express");
-const bodyParser = require("body-parser");
+const routes = require("./routes");
 
 const app = express();
-
-app.use(bodyParser.json());
-
-app.get("/", (req, res) => {
-  res.send({ mensagem: "Olá mundo!" });
-});
+routes(app);
 
 app.listen(3000, () => console.log("Server has started."));
 
