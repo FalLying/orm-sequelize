@@ -1,9 +1,11 @@
 const database = require("../models");
+const Services = require("../services/Services");
+const niveisServices = new Services("Niveis");
 
 class NivelController {
   static async getAll(req, res) {
     try {
-      const result = await database.Niveis.findAll();
+      const result = await niveisServices.getAll();
       res.json(result);
     } catch (error) {
       res.status(500).json(error.message);
@@ -12,9 +14,7 @@ class NivelController {
   static async getById(req, res) {
     const { id } = body.params;
     try {
-      const result = await database.Niveis.findOne({
-        where: { id: Number(id) },
-      });
+      const result = await niveisServices.getByID({ id: id });
       res.json(result);
     } catch (error) {
       res.status(500).json(error.message);
@@ -33,9 +33,7 @@ class NivelController {
     const { id } = req.params;
     const data = req.body;
     try {
-      await database.Niveis.update(data, {
-        where: { id: Number(id) },
-      });
+      await niveisServices.update(data, { id: Number(id) });
       res.json("updated");
     } catch (error) {
       res.status(500).json(error.message);
@@ -44,8 +42,17 @@ class NivelController {
   static async delete(req, res) {
     const { id } = req.body;
     try {
-      await database.Niveis.destroy({ where: { id: Number(id) } });
+      await niveisServices.destroy({ id: Number(id) });
       res.json("deleted");
+    } catch (error) {
+      res.status(500).json(error.message);
+    }
+  }
+  static async restore(req, res) {
+    const { id } = req.params;
+    try {
+      await niveisServices.restore({ id: Number(id) });
+      res.json({ message: "restored" });
     } catch (error) {
       res.status(500).json(error.message);
     }

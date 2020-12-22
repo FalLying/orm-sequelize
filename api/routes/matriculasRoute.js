@@ -8,5 +8,6 @@ router.get("/:id", MatriculaController.getById);
 router.post("/", MatriculaController.create);
 router.put("/:id", MatriculaController.update);
 router.delete("/:id", MatriculaController.delete);
+router.post("/:id/restore", MatriculaController.restore);
 
 module.exports = router;
